@@ -24,9 +24,11 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-items = [Item('jeans', 'denim jeans'), Item('shirt', 'short sleeve shirt')]
-room['outside'].items = items
-print(room['outside'].items[0].name)
+outside_room_items = [Item('jeans', 'denim jeans'), Item('shirt', 'short sleeve shirt'),Item('Cap', 'This is a baseball cap')]
+outside_foyer_items = [Item('chair', 'This is a arm chair'), Item('couch', 'This is for indoor'),Item('table', 'This is a standing desk')]
+room['outside'].items = outside_room_items
+room['foyer'].items = outside_foyer_items
+
 
 
 
@@ -61,12 +63,12 @@ player = Player(input("Player name: "),room['outside'])
 # If the user enters "q", quit the game.
 
 directions = ['n','s','e','w']
-valid_verbs = ['take', 'get', 'drop']
+valid_verbs = ['take', 'get', 'drop','i', 'inventory']
 
 while True:
     print(player.current_room)
     print("======================")
-    cmd = input(f"\n please enter the direction to move \nValid direction: {','.join(player.current_room.valid_directions())} to move or use verbs 'take' or 'get' to take an item, drop to return an item. Press 'q' to quit\n")
+    cmd = input(f"\n Please pick an option from below \n 1. Enter  {','.join(player.current_room.valid_directions())} to move\n 2. Type 'take' or 'get' and the item name to take an item\n 3. Enter 'drop' and the item name to return an item.\n 4. Type 'i' or 'inventory' to see the inventory \n 4. Press 'q' to quit\n")
     print("======================")
    
     if cmd=='q':
@@ -76,12 +78,16 @@ while True:
             player.move(cmd)
     elif cmd.split(" ")[0] in valid_verbs:
         verb = cmd.split(" ")[0]
-        item_name = cmd.split(" ")[1]
+        
         if verb == 'take' or verb == 'get':
+            item_name = cmd.split(" ")[1]
             print(player.on_take(item_name))
         elif verb == 'drop':
+            item_name = cmd.split(" ")[1]
             print(player.on_drop(item_name))
-
+        elif verb == 'i' or verb == 'i':
+            for item in player.items:
+                print(item.name)
 
     else:
         print("Invalid command")

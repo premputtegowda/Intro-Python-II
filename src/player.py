@@ -32,5 +32,8 @@ class Player:
                 self.current_room.items.append(item)
                 return f"You have dropped the item {item_name}"
         return f"This player doesnt' have the item {item_name}"
+
+    
+        
        
         
